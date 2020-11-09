@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web-Animations-Demo</title>
+    <style>
+        div#target {
+            background-color: red;
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<button onclick="animateElement()">Start</button>
+<button onclick="playPause()">Play/Pause</button>
+<button onclick="cancelAnimation()">Cancel</button>
+
+<div id="target">
+
+</div>
+
+<script>
+    const target = document.querySelector('div#target');
+
+    /** @type Animation */
+    let animation = null;
+
+    function animateElement() {
+      const openAnimation = [
+        { transform: 'scale(1)' },
+        { transform: 'scale(0)' },
+        { transform: 'scale(1)' },
+      ];
+      animation = target.animate(openAnimation, {duration: 2000 /*2s*/, easing: 'ease-in-out', iterations: 5});
+      animation.oncancel = () => console.log('canceled');
+      animation.onfinish = () => console.log('finished');
+    }
+
+    function playPause() {
+      if (!animation) return;
+
+      if (animation.playState === 'running') {
+        animation.pause();
+      } else {
+        animation.play();
+      }
+    }
+
+    function cancelAnimation() {
+      animation?.cancel();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web-Animations-Demo</title>
+    <style>
+        div#target {
+            background-color: red;
+            height: 100px;
+            width: 100px;
+        }
+        div#target.animated {
+            animation: openCloseAnimation 2s 5 ease-in-out;
+        }
+        @keyframes openCloseAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button onclick="animateElement()">Start</button>
+<button onclick="playPause()">Play/Pause</button>
+<button onclick="cancelAnimation()">Cancel</button>
+
+<div id="target">
+
+</div>
+
+<script>
+    const target = document.querySelector('div#target');
+    target.addEventListener('animationend', () => {
+      console.log('finished');
+      cancelAnimation(); // remove class
+    });
+
+
+    function animateElement() {
+      target.classList.add('animated')
+    }
+
+    function playPause() {
+      if (target.style.animationPlayState === 'paused') {
+        target.style.animationPlayState = 'running';
+      } else {
+        target.style.animationPlayState = 'paused';
+      }
+    }
+
+    function cancelAnimation() {
+      target.classList.remove('animated')
+    }
+</script>
+</body>
+</html>
